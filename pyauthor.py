@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 
 def assign_affiliation_number(author_table):
     affl_list = (author_table['affl_code']).to_string(index=False).split()
