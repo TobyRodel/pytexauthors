@@ -9,9 +9,13 @@ def assign_affiliation_number(author_table):
         num+=1
     return affl_dict
 
-def mnras_auth_list(filepath, author_table, affl_table):
+def sort_auths(author_table):
     author_table.sort_values(by=['author_no', 'secondname'], inplace=True)
-    author_table.reset_index(inplace=True)
+    author_table.reset_index(inplace=True, drop=True)
+    return author_table
+
+def mnras_auth_list(filepath, author_table, affl_table):
+    author_table = sort_auths(author_table)
     affl_nums = assign_affiliation_number(author_table)
     auth_num = author_table.shape[0]
     with open(filepath, 'w') as f:
