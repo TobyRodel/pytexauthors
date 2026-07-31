@@ -1,11 +1,13 @@
-import pandas as pd
-import sys
+from pandas import read_excel
+from argparse import ArgumentParser
 from pyauthor import mnras_auth_list as authlist
 
-tablepath = sys.argv[1]
-outpath = sys.argv[2]
+parser = ArgumentParser(prog='PyTeXAuthors')
+parser.add_argument('--tablepath', '-i', help='Path to author list spreadsheet.')
+parser.add_argument('--outpath', '-o', help='Path to output author list TeX file.')
+args = parser.parse_args()
 
-authors = pd.read_excel(tablepath)
-affls = pd.read_excel(tablepath, 1)
+authors = read_excel(args.tablepath)
+affls = read_excel(args.tablepath, 1)
 
-authlist(outpath, authors, affls)
+authlist(args.outpath, authors, affls)
