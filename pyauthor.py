@@ -1,6 +1,14 @@
 import numpy as np
 
 def assign_affiliation_number(author_table):
+    """Assigns affiliation numbers based on author spreadsheet
+
+    Args:
+        author_table (pandas.DataFrame): pandas dataframe with author information
+
+    Returns:
+        dict: _d
+    """    
     affl_list = (author_table['affl_code']).to_string(index=False).split()
     affl_dict = dict.fromkeys(affl_list)
     num = 1
@@ -10,11 +18,26 @@ def assign_affiliation_number(author_table):
     return affl_dict
 
 def sort_auths(author_table):
+    """Sorts author list
+
+    Args:
+        author_table (pandas.DataFrame): pandas dataframe with author information.
+
+    Returns:
+        pandas.DataFrame: sorted pandas dataframe with author information.
+    """    
     author_table.sort_values(by=['author_no', 'secondname'], inplace=True)
     author_table.reset_index(inplace=True, drop=True)
     return author_table
 
 def mnras_auth_list(filepath, author_table, affl_table):
+    """Formats author list for Monthly Notices of the Royal Astronomical Society (MNRAS)
+
+    Args:
+        filepath (str): Path to output .tex file.
+        author_table (pandas.DataFrame): pandas dataframe with author information.
+        affl_table (pandas.DataFrame): pandas dataframe with shortform affiiation keys.
+    """    
     author_table = sort_auths(author_table)
     affl_nums = assign_affiliation_number(author_table)
     auth_num = author_table.shape[0]
